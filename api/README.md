@@ -1,2 +1,0 @@
-# ItineraryProject
-Make an itinerary!
