@@ -1,0 +1,42 @@
+volumes:
+  itinerary-data:
+    external: true
+
+services:
+  fastapi:
+    build:
+      context: ./api
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - 8000:80
+    volumes:
+      - ./api:/app
+    environment:
+      DATABASE_URL: postgresql://itinerary:itinerary@db/itinerary-data
+      WAIT_HOSTS: db:5432
+
+  itinerary-planner:
+    image: node:lts-bullseye
+    command: /bin/bash run.sh
+    working_dir: /app
+    volumes:
+      - ./itinerary-planner:/app
+    ports:
+      - "3000:3000"
+    environment:
+      HOST_OS: ${OS}
+      NODE_ENV: development
+      HOST: "0.0.0.0"
+      PUBLIC_URL: http://localhost:3000
+      REACT_APP_ITINERARY_API_HOST: http://localhost:8000
+
+  db:
+    image: postgres:latest
+    volumes:
+      - itinerary-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: itinerary
+      POSTGRES_USER: itinerary
+      POSTGRES_DB: itinerary-data
+    ports:
+      - 15432:5432
