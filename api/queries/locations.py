@@ -75,6 +75,81 @@ class LocationRepository:
             print(e)
             return {"message": "Could not get all locations"}
 
+    def update(
+        self, location_id: int, location: LocationIn
+    ) -> Union[LocationOut, Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        UPDATE locations
+                        SET trip_id = %s
+                            , name = %s
+                            , date = %s
+                            , address = %s
+                            , pic = %s
+                        WHERE id = %s;
+                        """,
+                        [
+                            location.trip_id,
+                            location.name,
+                            location.date,
+                            location.address,
+                            location.pic,
+                            location_id
+                        ],
+                    )
+                    return self.location_in_to_out(location_id, location)
+        except Exception as e:
+            print(e)
+            return {"message": "Could not update location"}
+
+    def get_one(self, location_id: int) -> Optional[LocationOut]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT l.id AS location_id,
+                        l.trip_id AS trip_id,
+                        l.name AS locations,
+                        l.date AS date,
+                        l.address AS address,
+                        l.pic AS picture,
+                        t.name AS trip
+                        FROM locations AS l
+                        LEFT JOIN trip t
+                        ON (t.id = l.trip_id)
+                        WHERE l.id = %s
+                        ORDER BY l.date;
+                        """,
+                        [location_id],
+                    )
+                    record = result.fetchone()
+                    if record is None:
+                        return None
+                    return self.record_to_location_out(record)
+        except Exception as e:
+            print(e)
+            return {"message": "Could not get that location"}
+
+    def delete(self, location_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM locations
+                        WHERE ID = %s;
+                        """,
+                        [location_id],
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return {"message": "Could not delete location"}
+
     def location_in_to_out(self, id: int, location: LocationIn):
         old_data = location.dict()
         return LocationOut(id=id, **old_data)
