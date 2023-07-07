@@ -29,7 +29,7 @@ class LocationRepository:
                     result = db.execute(
                         """
                     INSERT INTO locations
-                        (name, date, address)
+                        (trip_id, name, date, address, pic)
                     VALUES
                         (%s, %s, %s, %s, %s)
                     RETURNING id;
@@ -62,7 +62,7 @@ class LocationRepository:
                         l.pic AS picture,
                         t.name AS trip
                         FROM locations AS l
-                        LEFT JOIN trip t
+                        LEFT JOIN trips t
                         ON (t.id = l.trip_id)
                         ORDER BY l.date;
                         """
@@ -119,7 +119,7 @@ class LocationRepository:
                         l.pic AS picture,
                         t.name AS trip
                         FROM locations AS l
-                        LEFT JOIN trip t
+                        LEFT JOIN trips t
                         ON (t.id = l.trip_id)
                         WHERE l.id = %s
                         ORDER BY l.date;

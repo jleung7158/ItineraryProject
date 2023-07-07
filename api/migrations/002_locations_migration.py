@@ -13,7 +13,7 @@ steps = [
         """,
         ##Drop the table
         """
-        DROP TABLE account;
+        DROP TABLE locations;
         """
     ]
 ]

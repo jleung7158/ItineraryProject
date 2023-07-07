@@ -23,7 +23,7 @@ class TripRepository:
                     result = db.execute(
                         """
                     INSERT INTO trips
-                        (name, date, address)
+                        (name, pic)
                     VALUES
                         (%s, %s)
                     RETURNING id;
@@ -34,7 +34,7 @@ class TripRepository:
                         ],
                     )
                     id = result.fetchone()[0]
-                    return self.location_in_to_out(id, trip)
+                    return self.trip_in_to_out(id, trip)
         except Exception as e:
             print(e)
             return {"message": "Could not create trip"}
@@ -53,7 +53,7 @@ class TripRepository:
                         """
                     )
                     return [
-                        self.record_to_location_out(record)
+                        self.record_to_trip_out(record)
                         for record in result
                     ]
         except Exception as e:
