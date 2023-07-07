@@ -1,11 +1,13 @@
 from fastapi import FastAPI
 from routers import (
+    trips,
     locations,
     plans
 )
 
 
 app = FastAPI()
+app.include_router(trips.router)
 app.include_router(locations.router)
 app.include_router(plans.router)
 

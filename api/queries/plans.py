@@ -12,7 +12,7 @@ class PlanIn(BaseModel):
     location_id: int
     detail: str
     time: datetime
-    names_attendees: List[str]
+    names_attendees: str
     num_of_attendees: int
     picture_url: Optional[str]
 
@@ -22,7 +22,7 @@ class PlanOut(BaseModel):
     location_id: int
     detail: str
     time: datetime
-    names_attendees: List[str]
+    names_attendees: str
     num_of_attendees: int
     picture_url: Optional[str]
 
@@ -85,14 +85,14 @@ class PlanRepository:
                             p.picture_url AS picture,
                             l.name AS location
                         FROM plans AS p
-                        LEFT JOIN location l
+                        LEFT JOIN locations l
                         ON (l.id = p.location_id)
                         ORDER BY p.time;
                         """
                     )
                     return [
-                        self.plan_out(res)
-                        for res in result
+                        self.plan_out(record)
+                        for record in result
                     ]
 
         except Exception as e:
@@ -106,17 +106,21 @@ class PlanRepository:
                     db.execute(
                         """
                         SELECT
-                            id,
-                            location_id,
-                            detail,
-                            time,
-                            names_attendees,
-                            num_of_attendees,
-                            picture_url
-                        FROM plans
-                        WHERE id = %s
+                        p.id AS plan_id,
+                        p.location_id AS location_id,
+                        p.detail AS detail,
+                        p.time AS time,
+                        p.names_attendees AS names,
+                        p.num_of_attendees AS num_of_attendees,
+                        p.picture_url AS picture,
+                        l.name AS location
+                        FROM plans p
+                        LEFT JOIN locations l
+                        ON (l.id = p.location_id)
+                        WHERE p.id = %s
+                        ORDER BY p.time;
                         """,
-                        [plan_id]
+                        [plan_id],
                     )
                     data = db.fetchone()
                     if data:
@@ -125,7 +129,7 @@ class PlanRepository:
                             location_id=data[1],
                             detail=data[2],
                             time=data[3],
-                            names_attendee=data[4],
+                            names_attendees=data[4],
                             num_of_attendees=data[5],
                             picture_url=data[6]
                         )
@@ -196,13 +200,13 @@ class PlanRepository:
         else:
             return Error(message="Plan not found")
 
-    def plan_out(self, res):
+    def plan_out(self, record):
         return PlanOut(
-            id=res[0],
-            location_id=res[1],
-            detail=res[2],
-            time=res[3],
-            names_attendees=res[4],
-            num_of_attendees=res[5],
-            picture_url=res[6],
+            id=record[0],
+            location_id=record[1],
+            detail=record[2],
+            time=record[3],
+            names_attendees=record[4],
+            num_of_attendees=record[5],
+            picture_url=record[6],
         )
