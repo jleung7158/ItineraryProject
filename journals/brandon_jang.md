@@ -14,5 +14,18 @@ I set up the frontend for our project. We decided to set it up using Vite + Reac
 
 - Finish wireframing, and begin working on FastAPI endpoints
 
-## June 30th, 2023
+## July 5th, 2023
+
+- Dockerfile created
+- Docker containers set up
+- FastAPI endpoints created
+
+Today, I spent a majority of the time recapping the wireframe and going over exactly which endpoints needed to be created.
+After that was done, I managed to complete the endpoints for the day.
+
+### Tomorrow's Plan
+
+- Check to make sure plans endpoints works with locations endpoint
+- If working, start on frontend for the project
+
 
