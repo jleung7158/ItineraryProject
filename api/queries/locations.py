@@ -11,7 +11,7 @@ class LocationIn(BaseModel):
     name: str
     date: str
     address: str
-    picture_url: Optional[str]
+    pic: Optional[str]
 
 class LocationOut(BaseModel):
     id: int
@@ -19,7 +19,7 @@ class LocationOut(BaseModel):
     name: str
     date: str
     address: str
-    picture_url: Optional[str]
+    pic: Optional[str]
 
 class LocationRepository:
     def create(self, location: LocationIn) -> LocationOut:
@@ -39,7 +39,7 @@ class LocationRepository:
                             location.name,
                             location.date,
                             location.address,
-                            location.picture_url
+                            location.pic
                         ],
                     )
                     id = result.fetchone()[0]
@@ -47,7 +47,7 @@ class LocationRepository:
         except Exception as e:
             print(e)
             return {"message": "Could not create location"}
-  
+
     def get_all(self) -> Union[List[LocationOut], Error]:
         try:
             with pool.connection() as conn:
@@ -59,7 +59,7 @@ class LocationRepository:
                         l.name AS locations,
                         l.date AS date,
                         l.address AS address,
-                        l.picture_url AS picture,
+                        l.pic AS picture,
                         t.name AS trip
                         FROM locations AS l
                         LEFT JOIN trip t
@@ -76,8 +76,8 @@ class LocationRepository:
             return {"message": "Could not get all locations"}
 
     def location_in_to_out(self, id: int, location: LocationIn):
-      old_data = location.dict()
-      return LocationOut(id=id, **old_data)
+        old_data = location.dict()
+        return LocationOut(id=id, **old_data)
     
     def record_to_location_out(self, record):
         return LocationOut(
@@ -86,5 +86,5 @@ class LocationRepository:
             name=record[2],
             date=record[3],
             address=record[4],
-            picture_url=record[5],
+            pic=record[5],
         )

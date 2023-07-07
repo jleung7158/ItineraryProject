@@ -8,12 +8,12 @@ class Error(BaseModel):
 
 class TripIn(BaseModel):
     name: str
-    picture_url: Optional[str]
+    pic: Optional[str]
 
 class TripOut(BaseModel):
     id: int
     name: str
-    picture_url: Optional[str]
+    pic: Optional[str]
 
 class TripRepository:
     def create(self, trip: TripIn) -> TripOut:
@@ -30,7 +30,7 @@ class TripRepository:
                     """,
                         [
                             trip.name,
-                            trip.picture_url
+                            trip.pic
                         ],
                     )
                     id = result.fetchone()[0]
@@ -38,7 +38,7 @@ class TripRepository:
         except Exception as e:
             print(e)
             return {"message": "Could not create trip"}
-  
+
     def get_all(self) -> Union[List[TripOut], Error]:
         try:
             with pool.connection() as conn:
@@ -47,7 +47,7 @@ class TripRepository:
                         """
                         SELECT t.id AS trip_id,
                         t.name AS trips,
-                        t.picture_url AS pictures
+                        t.pic AS pictures
                         FROM trips AS t
                         ORDER BY t.name;
                         """
@@ -61,12 +61,12 @@ class TripRepository:
             return {"message": "Could not get all trips"}
 
     def trip_in_to_out(self, id: int, trip: TripIn):
-      old_data = trip.dict()
-      return TripOut(id=id, **old_data)
+        old_data = trip.dict()
+        return TripOut(id=id, **old_data)
     
     def record_to_trip_out(self, record):
         return TripOut(
             id=record[0],
             name=record[1],
-            picture_url=record[2],
+            pic=record[2],
         )
