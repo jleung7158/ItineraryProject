@@ -1,6 +1,6 @@
 steps = [
     [
-        ##Create the table
+        # Create the table
         """
         CREATE TABLE plans (
             id SERIAL PRIMARY KEY NOT NULL,
@@ -12,7 +12,7 @@ steps = [
             picture_url VARCHAR(500) NULL
         );
         """,
-        ##Drop the table
+        # Drop the table
         """
         DROP TABLE plans;
         """
