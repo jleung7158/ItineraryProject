@@ -3,25 +3,24 @@
 // import viteLogo from './assets/vite.svg'
 import './App.css'
 import Sidebar from "./components/Sidebar.jsx"
+import ItineraryCard from './components/ItineraryCard'
 
 function App() {
 
   return (
     <>
-      <div className='grid grid-rows-4 grid-flow-col gap-10 h-[1150px]'>
-        <div className="row-span-4 ... border-2 p-5">
+      <div className='grid grid-rows-4 grid-cols-4 grid-flow-col gap-x-10 h-full'>
+        <div className="row-span-4 col-span-1 col-end-1 ... border-2 p-5 w-[180px] h-[870px]">
           <Sidebar />
         </div>
-        <div className="col-span-2 ... border-2 p-5">Test 2</div>
-        <div className="row-span-2 col-span-2 ... mt-12 border-2 p-5">Test 3</div>
-        <div className="row-span-4 ... border-2 p-5">
+        <div className="row-span-2 col-span-1 ... border-2 p-5">Test 2</div>
+        <div className="row-span-2 col-span-1 ... mt-12 border-2 p-5">Test 3</div>
+        <div className="row-span-4 col-span-2 ... border-2 p-5">
           Test 4
-            <div className='p-12'>
-              Itinerary Card Placeholder
-            </div>
+          <ItineraryCard />
         </div>
-        <div className="col-span-2 ... border-2 p-5">Test 5</div>
-        <div className="row-span-2 col-span-2 ... mt-12 border-2 p-5">Test 6</div>
+        <div className="row-span-2 col-span-1 ... border-2 p-5">Test 5</div>
+        <div className="row-span-2 col-span-1 ... mt-12 border-2 p-5">Test 6</div>
       </div>
     </>
   )

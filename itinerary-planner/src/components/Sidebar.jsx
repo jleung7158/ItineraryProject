@@ -1,26 +1,39 @@
-import { useEffect } from "react";
-import { useState } from "react";
+// import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useGetTripsQuery } from "../store/api.js";
+import { setTrip, clearTrip } from "../slices/tripSlice";
 
 export default function Sidebar() {
-  const [trips, setTrips] = useState([]);
+  const dispatch = useDispatch();
+  const trip = useSelector((state) => state.tripFilter.trip);
+  const { data: tripsData } = useGetTripsQuery();
+  // const [trips, setTrips] = useState([]);
 
-  const fetchTrips = async () => {
-    const url = `http://localhost:8000/trips`;
-    const response = await fetch(url);
-    if (response.ok) {
-      const TData = await response.json();
-      setTrips(TData);
-    }
-  };
+  // const fetchTrips = async () => {
+  //   const url = `http://localhost:8000/trips`;
+  //   const response = await fetch(url);
+  //   if (response.ok) {
+  //     const TData = await response.json();
+  //     setTrips(TData);
+  //   }
+  // };
 
   function tripAcronyms (trip) {
     let acronym = trip.name.replace(/\B\w+/g, "");
     return acronym;
   }
 
-  useEffect(() => {
-    fetchTrips();
-  }, []);
+  function handleTrip (trip) {
+    dispatch(setTrip(trip.name));
+  }
+
+  function handleClearTrip () {
+    dispatch(clearTrip());
+  }
+
+  // useEffect(() => {
+  //   fetchTrips();
+  // }, []);
 
   return (
     <div>
@@ -37,17 +50,33 @@ export default function Sidebar() {
           src="https://cdn-icons-png.flaticon.com/512/3524/3524388.png" 
           />
         </button>
-        {trips?.map((trip) => {
+        <div>
+          Selected Trip: {trip ? <div>{trip}</div> : <div></div>} 
+        </div>
+        {tripsData?.map((trip) => {
+          {trip.name}
           return (
             <button 
+            onClick={() => {
+              handleTrip(trip);
+            }}
+            style={{
+              backgroundImage: `url(${trip.pic})`,
+              backgroundSize: 'cover',
+            }}
             key={trip.id}
-            className="my-4 p-4 shadow-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full text-black text-3xl font-bold leading-[2.5rem] hover:border-4 hover:border-fuchsia-600"
+            className="my-4 p-4 shadow-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full text-white text-3xl font-bold leading-[2.5rem] hover:border-4 hover:border-fuchsia-600 hover:text-black"
             >
               {tripAcronyms(trip)}
             </button>
           )
         })}
-
+        <button 
+        onClick={() => {
+          handleClearTrip();
+        }}>
+          Clear
+        </button>
       </div>
     </div>
   )
