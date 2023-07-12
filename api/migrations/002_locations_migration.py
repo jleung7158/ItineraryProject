@@ -1,6 +1,6 @@
 steps = [
     [
-        ##Create the table
+        # Create the table
         """
         CREATE TABLE locations (
             id SERIAL PRIMARY KEY NOT NULL,
@@ -11,9 +11,9 @@ steps = [
             pic VARCHAR(500) NULL
         );
         """,
-        ##Drop the table
+        # Drop the table
         """
         DROP TABLE locations;
         """
-    ]
+    ],
 ]
