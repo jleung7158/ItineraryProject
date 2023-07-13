@@ -17,7 +17,7 @@ function App() {
         </div>
         <div className="row-span-2 col-span-1 ... border-2 p-5">Test 2</div>
         <div className="row-span-2 col-span-1 ... mt-12 border-2 p-5">Test 3</div>
-        <div className="row-span-4 col-span-2 ... border-2 p-5">
+        <div className="row-span-4 col-span-2 ... border-2 p-5 flex flex-col justify-center items-center">
           Test 4
           <ItineraryCard />
             <div className='w-auto h-auto border-2 p-1'>

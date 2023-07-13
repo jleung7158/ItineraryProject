@@ -18,7 +18,7 @@ export default function ItineraryCard() {
   }, []);
 
   return(
-    <div className="">
+    <div className="flex flex-col justify-center items-center">
       Location
       {locations?.map((location) => {
         return (
