@@ -13,10 +13,18 @@ export const api = createApi({
     getTrip: builder.query({
       query: (trip_id) => `/trips/${trip_id}`,
     }),
+    getLocations: builder.query({
+      query: () => `/locations`,
+    }),
+    getLocation: builder.query({
+      query: (location_id) => `/trips/${location_id}`,
+    }),
   }),
 });
 
 export const {
   useGetTripsQuery,
   useGetTripQuery,
+  useGetLocationsQuery,
+  useGetLocationQuery,
 } = api;

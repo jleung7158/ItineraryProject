@@ -20,6 +20,7 @@ class LocationOut(BaseModel):
     date: str
     address: str
     pic: Optional[str]
+    trip: Optional[str]
 
 class LocationRepository:
     def create(self, location: LocationIn) -> LocationOut:
@@ -162,4 +163,5 @@ class LocationRepository:
             date=record[3],
             address=record[4],
             pic=record[5],
+            trip=record[6],
         )

@@ -1,4 +1,3 @@
-// import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useGetTripsQuery } from "../store/api.js";
 import { setTrip, clearTrip } from "../slices/tripSlice";
@@ -7,16 +6,6 @@ export default function Sidebar() {
   const dispatch = useDispatch();
   const trip = useSelector((state) => state.tripFilter.trip);
   const { data: tripsData } = useGetTripsQuery();
-  // const [trips, setTrips] = useState([]);
-
-  // const fetchTrips = async () => {
-  //   const url = `http://localhost:8000/trips`;
-  //   const response = await fetch(url);
-  //   if (response.ok) {
-  //     const TData = await response.json();
-  //     setTrips(TData);
-  //   }
-  // };
 
   function tripAcronyms (trip) {
     let acronym = trip.name.replace(/\B\w+/g, "");
@@ -30,10 +19,6 @@ export default function Sidebar() {
   function handleClearTrip () {
     dispatch(clearTrip());
   }
-
-  // useEffect(() => {
-  //   fetchTrips();
-  // }, []);
 
   return (
     <div>

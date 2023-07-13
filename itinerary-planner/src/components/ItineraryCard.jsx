@@ -1,26 +1,30 @@
-import { useEffect,useState } from "react";
-
+import { useSelector } from "react-redux";
+import { useGetLocationsQuery } from "../store/api";
 
 export default function ItineraryCard() {
-  const [locations, setLocations] = useState([]);
-
-  const fetchLocations = async () => {
-    const url = `http://localhost:8000/locations`
-    const response = await fetch(url);
-    if (response.ok) {
-      const LData = await response.json();
-      setLocations(LData);
+  const trip = useSelector((state) => state.tripFilter.trip);
+  const { data: lData } = useGetLocationsQuery();
+  
+  const getFilteredLocations = (trip, lData) => {
+    if (!trip) {
+      return null;
+    } else {
+      return lData?.filter((location) => {
+        for (const [key,value] of Object.entries([location])) {
+          if (location.trip.includes(trip)) {
+            return location.trip.includes(trip)
+          }
+        }
+      });
     }
   };
-
-  useEffect(() => {
-    fetchLocations();
-  }, []);
+  
+  const filteredLocations = getFilteredLocations(trip, lData);
 
   return(
     <div className="flex flex-col justify-center items-center">
-      Location
-      {locations?.map((location) => {
+      {trip}
+      {filteredLocations?.map((location) => {
         return (
           <div 
           key={location.id} 
