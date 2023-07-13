@@ -3,21 +3,23 @@
 import { useState } from 'react';
 import './App.css';
 import PlansModal from './components/plans/PlansModal';
+import Sidebar from "./components/Sidebar.jsx"
+import ItineraryCard from './components/ItineraryCard'
 
 function App() {
   const [planModal, setPlanModal] = useState(false)
 
   return (
     <>
-      <div className='grid grid-rows-4 grid-flow-col gap-10 h-[1150px]'>
-        <div className="row-span-4 ... border-2 p-5">Test 1</div>
-        <div className="col-span-2 ... border-2 p-5">Test 2</div>
-        <div className="row-span-2 col-span-2 ... mt-12 border-2 p-5">Test 3</div>
-        <div className="grid row-span-4 ... border-2 p-5">
+      <div className='grid grid-rows-4 grid-cols-4 grid-flow-col gap-x-10 h-full'>
+        <div className="row-span-4 col-span-1 col-end-1 ... border-2 p-5 w-[180px] h-[870px]">
+          <Sidebar />
+        </div>
+        <div className="row-span-2 col-span-1 ... border-2 p-5">Test 2</div>
+        <div className="row-span-2 col-span-1 ... mt-12 border-2 p-5">Test 3</div>
+        <div className="row-span-4 col-span-2 ... border-2 p-5 flex flex-col justify-center items-center">
           Test 4
-            <div className='p-12'>
-              Itinerary Card Placeholder
-            </div>
+          <ItineraryCard />
             <div className='w-auto h-auto border-2 p-1'>
               <div className="p-5 items-center">
                 <p className='p-5'>Most Recent Itinerary Plans</p>
@@ -28,8 +30,8 @@ function App() {
               </div>
             </div>
         </div>
-        <div className="col-span-2 ... border-2 p-5">Test 5</div>
-        <div className="row-span-2 col-span-2 ... mt-12 border-2 p-5">Test 6</div>
+        <div className="row-span-2 col-span-1 ... border-2 p-5">Test 5</div>
+        <div className="row-span-2 col-span-1 ... mt-12 border-2 p-5">Test 6</div>
         {planModal && (
           <div className="modal-overlay">
             <PlansModal setPlanModal={setPlanModal} />
