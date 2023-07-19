@@ -5,6 +5,7 @@ export default function ItineraryCard() {
   const trip = useSelector((state) => state.tripFilter.trip);
   const { data: lData } = useGetLocationsQuery();
   
+  /*eslint-disable*/
   const getFilteredLocations = (trip, lData) => {
     if (!trip) {
       return null;
