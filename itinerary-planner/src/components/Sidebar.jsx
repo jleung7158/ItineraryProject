@@ -1,23 +1,15 @@
-// import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useGetTripsQuery } from "../store/api.js";
 import { setTrip, clearTrip } from "../slices/tripSlice";
+import { toggleTripFormOpen } from "../slices/tripFormSlice.js";
+import TripForm from "./trips/TripForm.jsx";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
   const trip = useSelector((state) => state.tripFilter.trip);
   const { data: tripsData } = useGetTripsQuery();
-  // const [trips, setTrips] = useState([]);
-
-  // const fetchTrips = async () => {
-  //   const url = `http://localhost:8000/trips`;
-  //   const response = await fetch(url);
-  //   if (response.ok) {
-  //     const TData = await response.json();
-  //     setTrips(TData);
-  //   }
-  // };
-
+  const toggled = useSelector((state) => state.tripFormToggler.isOpen);
+  console.log(toggled)
   function tripAcronyms (trip) {
     let acronym = trip.name.replace(/\B\w+/g, "");
     return acronym;
@@ -31,9 +23,9 @@ export default function Sidebar() {
     dispatch(clearTrip());
   }
 
-  // useEffect(() => {
-  //   fetchTrips();
-  // }, []);
+  function handleNewTrip () {
+    dispatch(toggleTripFormOpen());
+  }
 
   return (
     <div>
@@ -45,11 +37,22 @@ export default function Sidebar() {
           />
         </div>
         <button 
-        className="flex flex-col justify-center items-center shadow-lg m-4 p-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full h-12 w-12 hover:border-4 hover:border-fuchsia-600">
-          <img 
+        type="trip"
+        className="flex flex-col justify-center items-center shadow-lg m-2 p-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full h-12 w-12 hover:border-4 hover:border-fuchsia-600"
+        onClick={() => handleNewTrip()}
+        >
+          { toggled ? <img
+          className="rotate-45"
           src="https://cdn-icons-png.flaticon.com/512/3524/3524388.png" 
-          />
+          /> : <img 
+          src="https://cdn-icons-png.flaticon.com/512/3524/3524388.png" 
+          />}
         </button>
+        { toggled ? (
+          <div className="w-full">
+            <TripForm />
+          </div>
+        ) : null}
         <div>
           Selected Trip: {trip ? <div>{trip}</div> : <div></div>} 
         </div>
