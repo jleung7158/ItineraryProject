@@ -24,7 +24,6 @@ export default function ItineraryCard() {
 
   return(
     <div className="flex flex-col justify-center items-center">
-      {trip}
       {filteredLocations?.map((location) => {
         return (
           <div 
