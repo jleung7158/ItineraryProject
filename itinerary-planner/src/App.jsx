@@ -5,6 +5,7 @@ import './App.css';
 import PlansModal from './components/plans/PlansModal';
 import Sidebar from "./components/Sidebar.jsx"
 import ItineraryCard from './components/ItineraryCard'
+import LocationList from './components/LocationList';
 
 function App() {
   const [planModal, setPlanModal] = useState(false)
@@ -30,7 +31,10 @@ function App() {
               </div>
             </div>
         </div>
-        <div className="row-span-2 col-span-1 ... border-2 p-5">Test 5</div>
+        <div className="row-span-2 col-span-1 ... border-2 p-5">
+          Test 5
+          <LocationList />
+        </div>
         <div className="row-span-2 col-span-1 ... mt-12 border-2 p-5">Test 6</div>
         {planModal && (
           <div className="modal-overlay">

@@ -5,7 +5,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8000"
   }),
-  tagTypes: ["TripsList"],
+  tagTypes: ["TripsList", "PlansList"],
   endpoints: (builder) => ({
     getTrips: builder.query({
       query: () => `/trips`,
@@ -26,7 +26,14 @@ export const api = createApi({
       query: () => `/locations`,
     }),
     getLocation: builder.query({
-      query: (location_id) => `/trips/${location_id}`,
+      query: (location_id) => `/locations/${location_id}`,
+    }),
+    getPlans: builder.query({
+      query: () => `/plans`,
+      providesTags: ["PlansList"],
+    }),
+    getPlan: builder.query({
+      query: (plan_id) => `/plans/${plan_id}`,
     }),
   }),
 });
@@ -37,4 +44,6 @@ export const {
   useCreateTripMutation,
   useGetLocationsQuery,
   useGetLocationQuery,
+  useGetPlansQuery,
+  useGetPlanQuery,
 } = api;

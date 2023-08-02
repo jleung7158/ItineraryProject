@@ -9,7 +9,7 @@ export default function Sidebar() {
   const trip = useSelector((state) => state.tripFilter.trip);
   const { data: tripsData } = useGetTripsQuery();
   const toggled = useSelector((state) => state.tripFormToggler.isOpen);
-  console.log(toggled)
+
   function tripAcronyms (trip) {
     let acronym = trip.name.replace(/\B\w+/g, "");
     return acronym;
