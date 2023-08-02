@@ -7,7 +7,7 @@ export default function LocationList() {
   const { data: lData } = useGetLocationsQuery();
 
   /*eslint-disable*/
-  const getFilteredLocations = (trip, lData) => {
+  function getFilteredLocations (trip, lData) {
     if (!trip) {
       return null;
     } else {
@@ -21,7 +21,20 @@ export default function LocationList() {
     }
   };
 
-  const filteredLocations = getFilteredLocations(trip, lData)
+  const filteredLocations = getFilteredLocations(trip, lData);
+  function getLocationDates (locations) {
+    const l = locations ?? [];
+    let dates = []
+    for (let location of l) {
+      let date = location.date;
+      if (!dates.includes(date)) {
+        dates.push(date)
+      }
+    }
+    return dates
+  }
+
+  const dates = getLocationDates(filteredLocations);
 
   return (
     <div>
@@ -29,28 +42,38 @@ export default function LocationList() {
         Location List
       </div>
       <div className="flex flex-col">
-        {filteredLocations?.map((location) => {
+        {dates?.map((date) => {
           return (
-            <div>
-              <div className="flex flex-col">
-                <div className="font-bold">{location.date}</div>
+            <div key={date}>
+              <div>
+                {date}
               </div>
-              <button 
-              key={location.id}
-              style={{
-                backgroundImage: `url(${location.pic})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
-              className="my-4 p-4 shadow-lg font-bold w-full min-w-fit"
-              >
-                {location.name}
-              </button>
+              {filteredLocations?.map((location) => {
+                if (location.date == date) {
+                  return (
+                    <div key={location.id}>
+                      <button 
+                      style={{
+                        backgroundImage: `url(${location.pic})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                      }}
+                      className="my-2 py-2 px-4 shadow-lg text-sm w-full min-w-[115px]"
+                      >
+                        <div className="flex flex-col">
+                          <div>
+                            {location.name}
+                          </div>
+                        </div>
+                      </button>
+                    </div>
+                  )
+                }
+              })}
             </div>
-            )
-        })}
+          )})
+        }
       </div>
-      
     </div>
   )
 }

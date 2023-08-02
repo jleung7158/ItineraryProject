@@ -28,10 +28,16 @@ export default function ItineraryCard() {
         return (
           <div 
           key={location.id} 
-          className="p-12 w-full h-full"
+          className="p-4 w-[120px] h-[80px] md:h-[250px] md:w-[400px] rounded-xl md:text-end md:align-text-top"
+          style={{
+            backgroundImage: `url(${location.pic})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
           >
-            <img src={location.pic} className="rounded-xl h-[250px] w-[400px] my-8"/>
-            {location.name}
+            <div className="md:font-bold text-sm md:text-xl">
+              {location.name}
+            </div>
           </div>
         )
       }
