@@ -38,9 +38,6 @@ export default function LocationList() {
 
   return (
     <div>
-      <div>
-        Location List
-      </div>
       <div className="flex flex-col">
         {dates?.map((date) => {
           return (
@@ -58,7 +55,7 @@ export default function LocationList() {
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                       }}
-                      className="my-2 py-2 px-4 shadow-lg text-sm w-full min-w-[115px]"
+                      className="my-2 md:py-2 px-1 md:px-4 shadow-lg text-[10px] md:text-sm w-full min-w-[50px] md:min-w-[115px]"
                       >
                         <div className="flex flex-col">
                           <div>

@@ -35,7 +35,7 @@ export default function ItineraryCard() {
             backgroundPosition: 'center',
           }}
           >
-            <div className="md:font-bold text-sm md:text-xl">
+            <div className="md:font-bold text-[10px] md:text-sm md:text-xl">
               {location.name}
             </div>
           </div>
